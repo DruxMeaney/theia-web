@@ -1,0 +1,26 @@
+{"imageGcsUri": "gs://your-bucket/path/M001.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M002.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M003.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M004.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M005.jpg", "boundingBoxAnnotations": [{"displayName": "BI-RADS 2", "xMin": 0.14961594176874976, "xMax": 0.15697311995062677, "yMin": 0.43664887038931993, "yMax": 0.44389485802632656, "annotationResourceLabels": {"aiplatform.googleapis.com/annotation_set_name": "local_annotations"}}, {"displayName": "BI-RADS 3", "xMin": 0.07986957401376729, "xMax": 0.09509381631629064, "yMin": 0.15637314450641895, "yMax": 0.16626434134123597, "annotationResourceLabels": {"aiplatform.googleapis.com/annotation_set_name": "local_annotations"}}], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M006.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M007.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M008.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M009.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M010.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M012.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M013.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M015.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M016.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M017.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M019.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M020.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M021.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M022.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M023.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M024.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M025.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M026.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M027.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M028.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
+{"imageGcsUri": "gs://your-bucket/path/M029.jpg", "boundingBoxAnnotations": [], "dataItemResourceLabels": {"aiplatform.googleapis.com/ml_use": "training"}}
