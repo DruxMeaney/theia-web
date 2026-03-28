@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'THEIA — Tactical Health Evaluation & Image Annotation',
-  description: 'Professional medical image annotation platform for computer vision workflows. DICOM, JSONL, COCO, YOLO, MONAI.',
+  description: 'Plataforma profesional de anotacion de imagenes medicas para vision computacional. DICOM, JSONL, COCO, YOLO, MONAI.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

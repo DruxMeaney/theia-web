@@ -14,7 +14,7 @@ import { useGitHubStore } from '@/stores/github-store';
 import { ImageEntry, BBox, TreeNode } from '@/lib/types';
 import { dirname } from '@/lib/utils';
 import { Config } from '@/lib/config';
-// Theme is managed by NavBar
+import { THEMES, getThemeById, applyTheme, saveThemeId, loadThemeId } from '@/lib/themes';
 import { colorForLabel } from '@/stores/app-store';
 import ImageCanvas from '@/components/canvas/ImageCanvas';
 
@@ -49,13 +49,21 @@ export default function Home() {
   const [showOptions, setShowOptions] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showGitHubSetup, setShowGitHubSetup] = useState(false);
+  const [currentThemeId, setCurrentThemeId] = useState('emerald');
+  const [showThemePicker, setShowThemePicker] = useState(false);
+  const [activePanel, setActivePanel] = useState<'workspace' | 'help' | 'about' | null>('workspace');
   const [sidebarWidth, setSidebarWidth] = useState(340);
   const [activeTab, setActiveTab] = useState<'explorer' | 'search'>('explorer');
   const [subfolder, setSubfolder] = useState('(Todos)');
   const [searchText, setSearchText] = useState('');
   const resizerRef = useRef<boolean>(false);
 
-  // Theme is managed by NavBar
+  // Load theme on mount
+  useEffect(() => {
+    const id = loadThemeId();
+    setCurrentThemeId(id);
+    applyTheme(getThemeById(id));
+  }, []);
 
   // ─── Build tree ────────────────────────────────────────────
   const buildTree = useCallback((allRelPaths: string[], folderName: string): TreeNode => {
@@ -443,20 +451,19 @@ export default function Home() {
         const f = e.target.files?.[0]; if (f) { const c = await f.text(); await processImport(importMode, c, f.name); }
       }} />
 
-      {/* ═══ WORKSPACE HEADER ═══ */}
+      {/* ═══ UNIFIED HEADER ═══ */}
       <header className="header-bar">
-        {/* Workspace label */}
-        <div className="flex items-center gap-2">
-          <svg viewBox="0 0 20 20" fill="var(--accent)" className="w-4 h-4">
-            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
-          <span className="text-[12px] font-bold uppercase tracking-[2px]" style={{ color: 'var(--fg-primary)' }}>Workspace</span>
+        {/* Logo */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))', boxShadow: '0 0 10px var(--accent-glow)' }}>
+            <span className="text-[8px] font-black" style={{ color: 'var(--bg-deep)' }}>T</span>
+          </div>
+          <span className="logo-text text-[13px] hidden sm:inline">THEIA</span>
         </div>
 
-        {/* Separator */}
-        <div className="w-px h-5 mx-1" style={{ background: 'var(--border)' }} />
+        <div className="w-px h-4" style={{ background: 'var(--border)' }} />
 
-        {/* Menus */}
+        {/* File menu */}
         <MenuDropdown label="Archivo" items={[
           { label: 'Cargar carpeta…', shortcut: '⌘L', action: loadFolder },
           { label: 'Cargar etiquetas…', action: () => labelsInputRef.current?.click() },
@@ -477,24 +484,60 @@ export default function Home() {
           null,
           { label: 'Conectar GitHub…', action: () => setShowGitHubSetup(true) },
         ]} />
-        <MenuDropdown label="Ayuda" items={[
-          { label: 'Centro de ayuda…', shortcut: 'F1', action: () => setShowHelp(true) },
-          null,
-          { label: 'Acerca de…', action: () => setShowAbout(true) },
-        ]} />
 
         <div className="flex-1" />
 
-        {/* Project info */}
-        <div className="flex items-center gap-3">
+        {/* Center: project info */}
+        <div className="flex items-center gap-2">
           {titleCounter && (
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold" style={{ background: 'var(--select-strong)', color: 'var(--accent)' }}>
-              {titleCounter}
-            </span>
+            <span className="badge text-[9px]">{titleCounter}</span>
           )}
-          <div className="flex items-center gap-2 text-[11px]" style={{ color: 'var(--fg-muted)' }}>
-            <span>{projectStore.projectName || 'Sin proyecto'}</span>
-            {projectStore.dirty && <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--warning)' }} />}
+          <span className="text-[10px] truncate max-w-[200px]" style={{ color: 'var(--fg-muted)' }}>
+            {projectStore.projectName || 'Sin proyecto'}
+          </span>
+          {projectStore.dirty && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--warning)' }} />}
+        </div>
+
+        <div className="flex-1" />
+
+        {/* Right: action buttons */}
+        <div className="flex items-center gap-1">
+          {/* Help */}
+          <button className="tool-btn !w-7 !h-7 !rounded-md" onClick={() => setShowHelp(true)} title="Ayuda (F1)">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+            </svg>
+          </button>
+          {/* About */}
+          <button className="tool-btn !w-7 !h-7 !rounded-md" onClick={() => setShowAbout(true)} title="Acerca de">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+          </button>
+          {/* Theme picker */}
+          <div className="relative">
+            <button className="tool-btn !w-7 !h-7 !rounded-md" onClick={() => setShowThemePicker(!showThemePicker)} title="Tema"
+              onBlur={() => setTimeout(() => setShowThemePicker(false), 200)}>
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+                <path d="M4 2a2 2 0 00-2 2v1a1 1 0 002 0V4h1a1 1 0 000-2H4zm9 0a1 1 0 000 2h1v1a1 1 0 002 0V4a2 2 0 00-2-2h-1zM3 10a1 1 0 011-1h1a1 1 0 010 2H4a1 1 0 01-1-1zm12 0a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zM4 16v-1a1 1 0 10-2 0v1a2 2 0 002 2h1a1 1 0 100-2H4zm12-1a1 1 0 10-2 0v1h-1a1 1 0 100 2h1a2 2 0 002-2v-1zM8 8a2 2 0 114 0 2 2 0 01-4 0z"/>
+              </svg>
+            </button>
+            {showThemePicker && (
+              <div className="absolute right-0 top-9 z-50 w-48 py-1.5 rounded-xl" style={{
+                background: 'var(--bg-elevated)', border: '1px solid var(--border-bright)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.5)', animation: 'fade-in 0.15s ease-out',
+              }}>
+                {THEMES.map((theme) => (
+                  <button key={theme.id} className="w-full flex items-center gap-2 px-3 py-2 text-left transition-colors"
+                    style={{ color: currentThemeId === theme.id ? 'var(--accent)' : 'var(--fg-secondary)', background: currentThemeId === theme.id ? 'var(--select-strong)' : 'transparent' }}
+                    onClick={() => { setCurrentThemeId(theme.id); applyTheme(theme); saveThemeId(theme.id); setShowThemePicker(false); }}>
+                    <div className="flex gap-0.5">{theme.preview.map((c, i) => <span key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />)}</div>
+                    <span className="text-[11px] font-medium flex-1">{theme.name}</span>
+                    {currentThemeId === theme.id && <svg viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </header>

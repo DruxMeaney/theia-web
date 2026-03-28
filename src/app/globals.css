@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════
+   THEIA — Global Design Tokens
+   ═══════════════════════════════════════════════ */
+
 :root {
   --bg-deep: #050a0e;
   --bg-primary: #0a1018;
@@ -25,6 +29,10 @@
   --warning: #ffaa00;
 }
 
+/* ═══════════════════════════════════════════════
+   Base Reset & Defaults
+   ═══════════════════════════════════════════════ */
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -35,15 +43,51 @@ html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ═══ SCROLLBAR ═══ */
+.no-select { user-select: none; -webkit-user-select: none; }
+
+/* ═══════════════════════════════════════════════
+   Scrollbar
+   ═══════════════════════════════════════════════ */
+
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
 
-.no-select { user-select: none; -webkit-user-select: none; }
+/* ═══════════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════════ */
 
-/* ═══ RESIZER ═══ */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 229, 153, 0.15); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes border-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ═══════════════════════════════════════════════
+   Resizer
+   ═══════════════════════════════════════════════ */
+
 .resizer {
   width: 2px;
   cursor: col-resize;
@@ -58,30 +102,10 @@ html, body {
   box-shadow: 0 0 12px var(--accent-glow);
 }
 
-/* ═══ ANIMATIONS ═══ */
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
-  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 229, 153, 0.15); }
-}
-@keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-@keyframes border-flow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* ═══════════════════════════════════════════════
+   Tool Buttons
+   ═══════════════════════════════════════════════ */
 
-/* ═══ FUTURISTIC TOOL BUTTON ═══ */
 .tool-btn {
   position: relative;
   display: flex;
@@ -126,12 +150,15 @@ html, body {
 }
 .tool-btn.active::after { opacity: 0.6; }
 
-/* ═══ MENU ITEMS ═══ */
+/* ═══════════════════════════════════════════════
+   Menu Items
+   ═══════════════════════════════════════════════ */
+
 .menu-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: calc(100% - 8px);
   padding: 7px 14px;
   font-size: 11.5px;
   color: var(--fg-secondary);
@@ -142,7 +169,6 @@ html, body {
   text-align: left;
   border-radius: 6px;
   margin: 1px 4px;
-  width: calc(100% - 8px);
 }
 .menu-item:hover {
   background: linear-gradient(90deg, var(--select-strong), transparent);
@@ -150,7 +176,10 @@ html, body {
   padding-left: 18px;
 }
 
-/* ═══ ANNOTATION LIST ITEM ═══ */
+/* ═══════════════════════════════════════════════
+   Annotation List Items
+   ═══════════════════════════════════════════════ */
+
 .ann-item {
   display: flex;
   align-items: center;
@@ -177,7 +206,10 @@ html, body {
   box-shadow: inset 3px 0 8px var(--accent-glow);
 }
 
-/* ═══ FILE TREE ═══ */
+/* ═══════════════════════════════════════════════
+   File Tree
+   ═══════════════════════════════════════════════ */
+
 .tree-file {
   display: flex;
   align-items: center;
@@ -216,7 +248,10 @@ html, body {
 }
 .tree-folder:hover { background: var(--select); color: var(--fg-primary); }
 
-/* ═══ INPUTS ═══ */
+/* ═══════════════════════════════════════════════
+   Inputs
+   ═══════════════════════════════════════════════ */
+
 .input-field {
   width: 100%;
   padding: 7px 12px;
@@ -235,7 +270,10 @@ html, body {
 }
 .input-field::placeholder { color: var(--fg-muted); opacity: 0.6; }
 
-/* ═══ BUTTONS ═══ */
+/* ═══════════════════════════════════════════════
+   Buttons
+   ═══════════════════════════════════════════════ */
+
 .btn-primary {
   padding: 8px 20px;
   font-size: 11px;
@@ -285,7 +323,10 @@ html, body {
   box-shadow: 0 0 8px var(--accent-glow);
 }
 
-/* ═══ TABS ═══ */
+/* ═══════════════════════════════════════════════
+   Tabs
+   ═══════════════════════════════════════════════ */
+
 .tab-btn {
   flex: 1;
   padding: 10px 0;
@@ -315,7 +356,10 @@ html, body {
   border-radius: 1px;
 }
 
-/* ═══ SECTION HEADERS ═══ */
+/* ═══════════════════════════════════════════════
+   Section Headers
+   ═══════════════════════════════════════════════ */
+
 .section-header {
   padding: 8px 14px;
   font-size: 9px;
@@ -325,7 +369,10 @@ html, body {
   color: var(--fg-muted);
 }
 
-/* ═══ DIALOGS ═══ */
+/* ═══════════════════════════════════════════════
+   Dialogs
+   ═══════════════════════════════════════════════ */
+
 .dialog-overlay {
   position: fixed;
   inset: 0;
@@ -337,6 +384,7 @@ html, body {
   z-index: 100;
   animation: fade-in 0.25s ease-out;
 }
+
 .dialog-panel {
   background: linear-gradient(155deg, var(--bg-elevated), var(--bg-deep));
   border: 1px solid var(--border-bright);
@@ -362,7 +410,10 @@ html, body {
   opacity: 0.4;
 }
 
-/* ═══ LOGO ═══ */
+/* ═══════════════════════════════════════════════
+   Logo
+   ═══════════════════════════════════════════════ */
+
 .logo-text {
   font-size: 17px;
   font-weight: 900;
@@ -373,7 +424,10 @@ html, body {
   background-clip: text;
 }
 
-/* ═══ FUTURISTIC HEADER ═══ */
+/* ═══════════════════════════════════════════════
+   Workspace Layout Components
+   ═══════════════════════════════════════════════ */
+
 .header-bar {
   height: 44px;
   display: flex;
@@ -398,7 +452,6 @@ html, body {
   opacity: 0.15;
 }
 
-/* ═══ SIDEBAR PANEL ═══ */
 .sidebar-panel {
   display: flex;
   flex-direction: column;
@@ -417,7 +470,6 @@ html, body {
   opacity: 0.2;
 }
 
-/* ═══ CANVAS AREA ═══ */
 .canvas-container {
   flex: 1;
   position: relative;
@@ -425,7 +477,6 @@ html, body {
   background: radial-gradient(ellipse at center, rgba(10,16,24,1), rgba(5,10,14,1));
 }
 
-/* ═══ BADGE / PILL ═══ */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -439,7 +490,6 @@ html, body {
   border: 1px solid var(--border-bright);
 }
 
-/* ═══ TOOL STRIP ═══ */
 .tool-strip {
   width: 52px;
   display: flex;
@@ -463,7 +513,6 @@ html, body {
   opacity: 0.15;
 }
 
-/* ═══ ANNOTATIONS PANEL ═══ */
 .annotations-panel {
   flex-shrink: 0;
   overflow: hidden;
@@ -482,4 +531,61 @@ html, body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
   opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════════════
+   Site Pages — Shared Utilities
+   ═══════════════════════════════════════════════ */
+
+.site-section {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.site-heading {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.site-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--fg-primary);
+  margin-bottom: 24px;
+}
+
+.site-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--fg-secondary);
+}
+
+.site-card {
+  border-radius: 16px;
+  padding: 32px;
+  background: linear-gradient(155deg, var(--bg-elevated), var(--bg-primary));
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.site-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.accent-border-left {
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+}
+
+.site-footer {
+  padding: 40px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
 }
