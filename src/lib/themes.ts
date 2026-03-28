@@ -235,5 +235,5 @@ export function saveThemeId(id: string): void {
 }
 
 export function loadThemeId(): string {
-  try { return localStorage.getItem('theia_theme') || 'emerald'; } catch { return 'emerald'; }
+  try { return localStorage.getItem('theia_theme') || 'violet'; } catch { return 'violet'; }
 }
