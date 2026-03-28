@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import NavBar from '@/components/shared/NavBar';
 
 // Particle system for background
@@ -111,37 +110,68 @@ export default function LandingPage() {
           }} />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl">
-          {/* Logo */}
-          <div className="relative mb-8">
-            <div className="absolute inset-0 blur-3xl opacity-20" style={{
-              background: 'radial-gradient(circle, var(--accent), var(--accent-secondary))',
-            }} />
-            <div className="relative rounded-3xl overflow-hidden" style={{
-              boxShadow: '0 0 60px rgba(0,229,153,0.12), 0 0 120px rgba(0,212,255,0.06)',
+        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl">
+          {/* Giant THEIA title */}
+          <div className="relative mb-6">
+            {/* Multi-layer glow behind text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="blur-[80px] opacity-30" style={{
+                width: '500px', height: '200px',
+                background: 'linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent))',
+              }} />
+            </div>
+
+            <h1 className="relative" style={{
+              fontSize: 'clamp(72px, 14vw, 160px)',
+              fontWeight: 900,
+              letterSpacing: '0.12em',
+              lineHeight: 1,
+              background: 'linear-gradient(135deg, var(--accent-bright) 0%, var(--accent) 30%, var(--accent-secondary) 60%, var(--accent-bright) 100%)',
+              backgroundSize: '200% 200%',
+              animation: 'gradient-shift 6s ease infinite',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0 0 30px var(--accent-glow)) drop-shadow(0 0 60px rgba(0,212,255,0.15))',
             }}>
-              <Image
-                src="/theia-logo.jpeg"
-                alt="THEIA Logo"
-                width={260}
-                height={260}
-                className="relative rounded-3xl"
-                style={{
-                  filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)',
-                }}
-                priority
-              />
+              THEIA
+            </h1>
+
+            {/* Subtle reflection */}
+            <div className="absolute -bottom-4 left-0 right-0 h-12 overflow-hidden pointer-events-none" style={{ opacity: 0.08 }}>
+              <div style={{
+                fontSize: 'clamp(72px, 14vw, 160px)',
+                fontWeight: 900,
+                letterSpacing: '0.12em',
+                lineHeight: 1,
+                background: 'linear-gradient(135deg, var(--accent-bright), var(--accent-secondary))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                transform: 'scaleY(-1)',
+                maskImage: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)',
+                WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)',
+              }}>
+                THEIA
+              </div>
             </div>
           </div>
 
+          {/* Decorative line */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, transparent, var(--accent))' }} />
+            <div className="w-2 h-2 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 8px var(--accent-glow)' }} />
+            <div className="h-px w-16" style={{ background: 'linear-gradient(90deg, var(--accent), transparent)' }} />
+          </div>
+
           {/* Tagline */}
-          <h1 className="text-[13px] font-bold uppercase tracking-[6px] mb-4" style={{
-            background: 'linear-gradient(135deg, var(--accent-bright), var(--accent-secondary))',
+          <h2 className="text-[11px] font-bold uppercase tracking-[5px] mb-5" style={{
+            background: 'linear-gradient(90deg, var(--fg-muted), var(--accent), var(--fg-muted))',
+            backgroundSize: '200% 100%',
+            animation: 'gradient-shift 4s ease infinite',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}>
             Tactical Health Evaluation & Image Annotation
-          </h1>
+          </h2>
 
           {/* Description */}
           <p className="text-[15px] leading-relaxed max-w-2xl mb-3" style={{ color: 'var(--fg-secondary)' }}>
