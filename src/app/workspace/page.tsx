@@ -17,6 +17,7 @@ import { Config } from '@/lib/config';
 import { THEMES, getThemeById, applyTheme, saveThemeId, loadThemeId } from '@/lib/themes';
 import { colorForLabel } from '@/stores/app-store';
 import ImageCanvas from '@/components/canvas/ImageCanvas';
+import Link from 'next/link';
 
 // ─── SVG Icons ───────────────────────────────────────────────
 const icons = {
@@ -441,7 +442,7 @@ export default function Home() {
   // RENDER
   // ═══════════════════════════════════════════════════════════
   return (
-    <div className="h-screen flex flex-col no-select" style={{ background: 'var(--bg-deep)' }}>
+    <div className="h-screen flex flex-col no-select overflow-hidden" style={{ background: 'var(--bg-deep)' }}>
       {/* Hidden inputs */}
       <input ref={fileInputRef} type="file" className="hidden" {...{ webkitdirectory: '', directory: '' } as React.InputHTMLAttributes<HTMLInputElement>} onChange={onFolderInputChange} />
       <input ref={labelsInputRef} type="file" accept=".json" className="hidden" onChange={async (e) => {
@@ -453,13 +454,16 @@ export default function Home() {
 
       {/* ═══ UNIFIED HEADER ═══ */}
       <header className="header-bar">
-        {/* Logo */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Logo — links back to site */}
+        <Link href="/" className="flex items-center gap-2 shrink-0 group" title="Volver al sitio">
+          <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--fg-muted)' }}>
+            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
           <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))', boxShadow: '0 0 10px var(--accent-glow)' }}>
             <span className="text-[8px] font-black" style={{ color: 'var(--bg-deep)' }}>T</span>
           </div>
           <span className="logo-text text-[13px] hidden sm:inline">THEIA</span>
-        </div>
+        </Link>
 
         <div className="w-px h-4" style={{ background: 'var(--border)' }} />
 

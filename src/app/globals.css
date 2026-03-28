@@ -37,7 +37,6 @@
 
 html, body {
   height: 100%;
-  overflow: hidden;
   background: var(--bg-deep);
   color: var(--fg-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
