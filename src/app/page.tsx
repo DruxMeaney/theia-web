@@ -451,7 +451,7 @@ export default function Home() {
       }} />
 
       {/* ═══ HEADER BAR ═══ */}
-      <header className="h-11 flex items-center px-5 shrink-0 gap-3" style={{ background: 'linear-gradient(90deg, var(--bg-primary), var(--bg-secondary))', borderBottom: '1px solid var(--border)' }}>
+      <header className="header-bar">
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))', boxShadow: '0 0 12px var(--accent-glow)' }}>
@@ -562,7 +562,7 @@ export default function Home() {
       <div className="flex-1 flex overflow-hidden">
 
         {/* ── SIDEBAR ── */}
-        <div className="flex flex-col overflow-hidden" style={{ width: sidebarWidth, background: 'var(--bg-primary)', borderRight: '1px solid var(--border)' }}>
+        <div className="sidebar-panel" style={{ width: sidebarWidth }}>
           {/* Tabs */}
           <div className="flex" style={{ borderBottom: '1px solid var(--border)' }}>
             <button className={`tab-btn ${activeTab === 'explorer' ? 'active' : ''}`} onClick={() => setActiveTab('explorer')}>Explorador</button>
@@ -629,7 +629,7 @@ export default function Home() {
         {/* ── CONTENT AREA ── */}
         <div className="flex-1 flex overflow-hidden">
           {/* Left tool strip */}
-          <div className="w-14 flex flex-col items-center gap-1 py-3 shrink-0" style={{ background: 'var(--bg-primary)', borderRight: '1px solid var(--border)' }}>
+          <div className="tool-strip">
             <ToolBtn icon={icons.folder} tip="Cargar carpeta" onClick={loadFolder} />
             <ToolBtn icon={icons.fileOpen} tip="Abrir JSONL" onClick={openProject} />
             <ToolBtn icon={icons.save} tip="Guardar" onClick={saveProject} />
@@ -654,7 +654,7 @@ export default function Home() {
             <ImageCanvas />
 
             {/* Annotations panel */}
-            <div className="shrink-0 overflow-hidden flex flex-col" style={{ height: 180, background: 'var(--bg-primary)', borderTop: '1px solid var(--border)' }}>
+            <div className="annotations-panel" style={{ height: 180 }}>
               <div className="section-header flex items-center justify-between">
                 <span>Anotaciones</span>
                 {annotations.length > 0 && (
@@ -753,7 +753,7 @@ function ToolBtn({ icon, tip, onClick, active, danger }: { icon: React.ReactNode
 }
 
 function Divider() {
-  return <div className="w-6 my-1" style={{ height: 1, background: 'var(--border)' }} />;
+  return <div className="w-7 my-1.5" style={{ height: 1, background: 'linear-gradient(90deg, transparent, var(--accent-glow), transparent)' }} />;
 }
 
 function MenuDropdown({ label, items }: { label: string; items: (null | { label: string; shortcut?: string; action: () => void })[] }) {
