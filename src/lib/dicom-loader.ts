@@ -32,7 +32,22 @@ interface DicomDataSet {
 }
 
 function getNum(ds: DicomDataSet, tag: string): number | undefined {
-  return ds.float(tag) ?? ds.uint16(tag) ?? ds.int16(tag);
+  // Many DICOM numeric fields are VR type DS (Decimal String) or IS (Integer String).
+  // ds.float() reads binary floats which gives garbage for string-encoded numbers.
+  // Always try string parsing first, then fall back to binary reads.
+  const strVal = ds.string(tag);
+  if (strVal !== undefined && strVal.trim() !== '') {
+    // Handle multi-value (backslash-separated) — take the first value
+    const first = strVal.split('\\')[0].trim();
+    const parsed = parseFloat(first);
+    if (!isNaN(parsed)) return parsed;
+  }
+  // Fall back to binary integer reads (for truly binary VR types like US, SS)
+  const u16 = ds.uint16(tag);
+  if (u16 !== undefined) return u16;
+  const i16 = ds.int16(tag);
+  if (i16 !== undefined) return i16;
+  return undefined;
 }
 
 function getStr(ds: DicomDataSet, tag: string): string {
