@@ -14,7 +14,7 @@ import { useGitHubStore } from '@/stores/github-store';
 import { ImageEntry, BBox, TreeNode } from '@/lib/types';
 import { dirname } from '@/lib/utils';
 import { Config } from '@/lib/config';
-import { THEMES, getThemeById, applyTheme, saveThemeId, loadThemeId } from '@/lib/themes';
+// Theme is managed by NavBar
 import { colorForLabel } from '@/stores/app-store';
 import ImageCanvas from '@/components/canvas/ImageCanvas';
 
@@ -49,20 +49,13 @@ export default function Home() {
   const [showOptions, setShowOptions] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showGitHubSetup, setShowGitHubSetup] = useState(false);
-  const [currentThemeId, setCurrentThemeId] = useState('emerald');
-  const [showThemePicker, setShowThemePicker] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(340);
   const [activeTab, setActiveTab] = useState<'explorer' | 'search'>('explorer');
   const [subfolder, setSubfolder] = useState('(Todos)');
   const [searchText, setSearchText] = useState('');
   const resizerRef = useRef<boolean>(false);
 
-  // Load saved theme on mount
-  useEffect(() => {
-    const savedId = loadThemeId();
-    setCurrentThemeId(savedId);
-    applyTheme(getThemeById(savedId));
-  }, []);
+  // Theme is managed by NavBar
 
   // ─── Build tree ────────────────────────────────────────────
   const buildTree = useCallback((allRelPaths: string[], folderName: string): TreeNode => {
@@ -450,14 +443,14 @@ export default function Home() {
         const f = e.target.files?.[0]; if (f) { const c = await f.text(); await processImport(importMode, c, f.name); }
       }} />
 
-      {/* ═══ HEADER BAR ═══ */}
+      {/* ═══ WORKSPACE HEADER ═══ */}
       <header className="header-bar">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))', boxShadow: '0 0 12px var(--accent-glow)' }}>
-            <span className="text-[10px] font-black text-[#050a0e]">T</span>
-          </div>
-          <span className="logo-text">THEIA</span>
+        {/* Workspace label */}
+        <div className="flex items-center gap-2">
+          <svg viewBox="0 0 20 20" fill="var(--accent)" className="w-4 h-4">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+          </svg>
+          <span className="text-[12px] font-bold uppercase tracking-[2px]" style={{ color: 'var(--fg-primary)' }}>Workspace</span>
         </div>
 
         {/* Separator */}
@@ -491,58 +484,6 @@ export default function Home() {
         ]} />
 
         <div className="flex-1" />
-
-        {/* Theme selector */}
-        <div className="relative">
-          <button
-            className="flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors"
-            style={{ background: showThemePicker ? 'var(--select-strong)' : 'transparent' }}
-            onClick={() => setShowThemePicker(!showThemePicker)}
-            onBlur={() => setTimeout(() => setShowThemePicker(false), 200)}
-            title="Cambiar tema"
-          >
-            <div className="flex gap-0.5">
-              {getThemeById(currentThemeId).preview.map((color, i) => (
-                <span key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
-              ))}
-            </div>
-            <span className="text-[10px]" style={{ color: 'var(--fg-muted)' }}>▾</span>
-          </button>
-          {showThemePicker && (
-            <div className="absolute top-9 right-0 z-50 p-2 rounded-xl min-w-[200px]" style={{
-              background: 'linear-gradient(145deg, var(--bg-elevated), var(--bg-primary))',
-              border: '1px solid var(--border-bright)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-              animation: 'fade-in 0.15s ease-out',
-            }}>
-              <div className="text-[10px] font-semibold uppercase tracking-wider px-2 py-1 mb-1" style={{ color: 'var(--fg-muted)' }}>Tema</div>
-              {THEMES.map((theme) => (
-                <button
-                  key={theme.id}
-                  className="w-full flex items-center gap-3 px-2 py-2 rounded-lg transition-all text-left"
-                  style={{
-                    background: currentThemeId === theme.id ? 'var(--select-strong)' : 'transparent',
-                    color: currentThemeId === theme.id ? theme.accent : 'var(--fg-secondary)',
-                  }}
-                  onClick={() => {
-                    setCurrentThemeId(theme.id);
-                    applyTheme(theme);
-                    saveThemeId(theme.id);
-                    setShowThemePicker(false);
-                  }}
-                >
-                  <div className="flex gap-1">
-                    {theme.preview.map((color, i) => (
-                      <span key={i} className="w-3 h-3 rounded-full border border-white/10" style={{ background: color }} />
-                    ))}
-                  </div>
-                  <span className="text-[11px] font-medium">{theme.name}</span>
-                  {currentThemeId === theme.id && <span className="ml-auto text-[10px]">✓</span>}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
 
         {/* Project info */}
         <div className="flex items-center gap-3">
